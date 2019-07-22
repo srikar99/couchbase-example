@@ -19,7 +19,7 @@ public class PersonRepo {
 
 	public List<Map<String, Object>> getPersonList() {
 		Cluster cluster = CouchbaseCluster.create("couchbase://127.0.0.1");
-		Bucket bucket = cluster.openBucket("locbucket", "locbucket");
+		Bucket bucket = cluster.openBucket("bucketName", "bucket");
 
 		JsonObject jsonObj = JsonObject.create();
 		jsonObj.put("id", 2).put("name", "fourthperson").put("email", "fourth@test.com");
@@ -27,7 +27,7 @@ public class PersonRepo {
 		
 		bucket.upsert(document);
 
-		N1qlQuery query = N1qlQuery.simple("select * from locbucket where id IS NOT MISSING");
+		N1qlQuery query = N1qlQuery.simple("select * from bucketName where id IS NOT MISSING");
 		
 		N1qlQueryResult result = bucket.query(query);
 		
